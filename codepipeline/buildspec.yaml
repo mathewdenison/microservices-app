@@ -9,20 +9,20 @@ phases:
       - cp -r shared response_formatting_service/
       - cp -r shared frontend/
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region \$AWS_REGION | docker login --username AWS --password-stdin \$ECR_URI
-      - TAG=\$(echo \$CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 
+      - TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
 
   build:
     commands:
-      - echo Build started on \`date\`
-      - docker build -t \$ECR_URI/request-service:latest ./request_service
-      - docker build -t \$ECR_URI/ai-processing-service:latest ./ai_processing_service
-      - docker build -t \$ECR_URI/response-formatting-service:latest ./response_formatting_service
-      - docker build -t \$ECR_URI/frontend:latest ./frontend
-      - docker push \$ECR_URI/request-service:latest
-      - docker push \$ECR_URI/ai-processing-service:latest
-      - docker push \$ECR_URI/response-formatting-service:latest
-      - docker push \$ECR_URI/frontend:latest
+      - echo Build started on `date`
+      - docker build -t $ECR_URI/request-service:latest ./request_service
+      - docker build -t $ECR_URI/ai-processing-service:latest ./ai_processing_service
+      - docker build -t $ECR_URI/response-formatting-service:latest ./response_formatting_service
+      - docker build -t $ECR_URI/frontend:latest ./frontend
+      - docker push $ECR_URI/request-service:latest
+      - docker push $ECR_URI/ai-processing-service:latest
+      - docker push $ECR_URI/response-formatting-service:latest
+      - docker push $ECR_URI/frontend:latest
 
 artifacts:
   files:
