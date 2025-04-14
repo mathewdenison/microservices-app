@@ -1,0 +1,4 @@
+apiVersion: v2
+name: response-formatting-service
+description: A Helm chart for deploying microservices to EKS
+version: 0.1.0

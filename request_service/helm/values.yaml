@@ -1,0 +1,12 @@
+image:
+  repository: <ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/request-service
+  tag: latest
+
+requestService:
+  port: 8000
+  queueUrl: "https://sqs.<REGION>.amazonaws.com/<ACCOUNT_ID>/request-queue"
+
+responseFormattingService:
+  queueUrl: "https://sqs.<REGION>.amazonaws.com/<ACCOUNT_ID>/response-queue"
+
+iamRoleArn: PLACEHOLDER_TO_BE_SET_BY_HELM
