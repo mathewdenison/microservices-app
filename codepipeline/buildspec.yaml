@@ -15,10 +15,10 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - docker build -t $ECR_URI/request-service:latest ./request_service
-      - docker build -t $ECR_URI/ai-processing-service:latest ./ai_processing_service
-      - docker build -t $ECR_URI/response-formatting-service:latest ./response_formatting_service
-      - docker build -t $ECR_URI/frontend:latest ./frontend
+      - docker build -t $ECR_URI/request-service:latest -f request_service/Dockerfile .
+      - docker build -t $ECR_URI/ai-processing-service:latest -f ai_processing_service/Dockerfile .
+      - docker build -t $ECR_URI/response-formatting-service:latest -f response_formatting_service/Dockerfile .
+      - docker build -t $ECR_URI/frontend:latest -f frontend/Dockerfile .
       - docker push $ECR_URI/request-service:latest
       - docker push $ECR_URI/ai-processing-service:latest
       - docker push $ECR_URI/response-formatting-service:latest
