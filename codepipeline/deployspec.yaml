@@ -17,5 +17,5 @@ phases:
 
   build:
     commands:
-      - echo Deploying via Helm with IRSA role: \$IAM_ROLE_ARN
-      - helm upgrade --install microservices-app ./helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN
+      - echo "Deploying via Helm with IRSA role"
+      - helm upgrade --install microservices-app ./helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
