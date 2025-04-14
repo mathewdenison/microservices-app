@@ -1,0 +1,14 @@
+image:
+  repository: <ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/microservices-app
+  tag: latest
+
+requestService:
+  port: 8000
+  queueUrl: "https://sqs.<REGION>.amazonaws.com/<ACCOUNT_ID>/request-queue"
+
+responseFormattingService:
+  port: 8000
+  queueUrl: "https://sqs.<REGION>.amazonaws.com/<ACCOUNT_ID>/response-queue"
+
+frontend:
+  port: 80

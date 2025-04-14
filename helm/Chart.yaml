@@ -1,0 +1,4 @@
+apiVersion: v2
+name: microservices-app
+description: A Helm chart for deploying microservices to EKS
+version: 0.1.0

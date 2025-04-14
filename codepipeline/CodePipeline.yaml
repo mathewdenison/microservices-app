@@ -1,0 +1,69 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  MicroservicesPipeline:
+    Type: AWS::CodePipeline::Pipeline
+    Properties:
+      Name: MicroservicesAppPipeline
+      RoleArn: !GetAtt CodePipelineServiceRole.Arn
+      ArtifactStore:
+        Type: S3
+        Location: ai-proj-bucket-ohio
+      Stages:
+        - Name: Source
+          Actions:
+            - Name: GitSource
+              ActionTypeId:
+                Category: Source
+                Owner: AWS
+                Provider: CodeCommit
+                Version: 1
+              OutputArtifacts:
+                - Name: SourceOutput
+              Configuration:
+                RepositoryName: microservices-app
+                BranchName: main
+
+        - Name: Build
+          Actions:
+            - Name: DockerBuildAndPush
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              InputArtifacts:
+                - Name: SourceOutput
+              OutputArtifacts:
+                - Name: BuildOutput
+              Configuration:
+                ProjectName: MicroservicesBuildProject
+
+        - Name: Deploy
+          Actions:
+            - Name: DeployWithHelm
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Provider: CodeBuild
+                Version: 1
+              InputArtifacts:
+                - Name: BuildOutput
+              Configuration:
+                ProjectName: MicroservicesDeployProject
+
+  CodePipelineServiceRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: CodePipelineServiceRole
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: codepipeline.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AWSCodeBuildDeveloperAccess
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AWSCodeCommitReadOnly
+        - arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryPowerUser

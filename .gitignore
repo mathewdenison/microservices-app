@@ -1,0 +1,70 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+crash.log
+
+# Helm
+*.tgz
+charts/
+tmpcharts/
+release.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.env
+venv/
+env/
+Pipfile.lock
+
+# Docker
+*.log
+*.pid
+*.sock
+
+# Node (if frontend uses it)
+node_modules/
+dist/
+npm-debug.log
+
+# Git
+.DS_Store
+*.swp
+
+# AWS
+*.pem
+
+# CodeBuild
+build/
+coverage/
+
+# Kubernetes manifests that get generated
+kubeconfig
+*.crt
+*.key
+
+# VS Code / JetBrains IDEs
+.vscode/
+.idea/
+
+# Zip, tar, temp
+*.zip
+*.tar.gz
+*.bak
+*.tmp
+
+# Don't include kubeconfig or IAM policy unless intentionally versioned
+kubeconfig*
+iam-policy.json
+
+# Ignore script logs
+*.out
+*.err
+
+# Sensitive config
+scripts/create-eks.sh.env

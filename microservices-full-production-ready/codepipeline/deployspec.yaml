@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - curl -sSL https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      - pip install awscli
+  pre_build:
+    commands:
+      - echo Updating kubeconfig for EKS...
+      - aws eks update-kubeconfig --region us-east-1 --name microservices-cluster
+      - echo Retrieving IAM Role ARN from Parameter Store...
+      - export IAM_ROLE_ARN=$(aws ssm get-parameter --name "/microservices/iam_role_arn" --with-decryption --query "Parameter.Value" --output text)
+  build:
+    commands:
+      - echo Deploying via Helm with IRSA role: $IAM_ROLE_ARN
+      - helm upgrade --install microservices-app ./helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
