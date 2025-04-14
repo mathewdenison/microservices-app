@@ -12,19 +12,19 @@ phases:
       - echo Updating kubeconfig for EKS...
       - aws eks update-kubeconfig --region us-east-2 --name microservices-cluster-ohio
       - echo Getting IAM role for SQS access...
-      - export IAM_ROLE_ARN=\$(aws ssm get-parameter --name "/microservices/iam_role_arn" --with-decryption --query "Parameter.Value" --output text)
-      - if [ -z "\$IAM_ROLE_ARN" ]; then echo "IAM_ROLE_ARN is empty. Failing build."; exit 1; fi
+      - export IAM_ROLE_ARN=$(aws ssm get-parameter --name "/microservices/iam_role_arn" --with-decryption --query "Parameter.Value" --output text)
+      - if [ -z "$IAM_ROLE_ARN" ]; then echo "IAM_ROLE_ARN is empty. Failing build."; exit 1; fi
   build:
     commands:
       - echo Deploying Frontend...
       - kubectl delete ingress frontend --ignore-not-found
-      - helm upgrade --install frontend ./frontend/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN
+      - helm upgrade --install frontend ./frontend/helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
 
       - echo Deploying Request Service...
-      - helm upgrade --install request-service ./request_service/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN
+      - helm upgrade --install request-service ./request_service/helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
 
       - echo Deploying AI Processing Service...
-      - helm upgrade --install ai-processing-service ./ai_processing_service/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN
+      - helm upgrade --install ai-processing-service ./ai_processing_service/helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
 
       - echo Deploying Response Formatting Service...
-      - helm upgrade --install response-formatting-service ./response_formatting_service/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN
+      - helm upgrade --install response-formatting-service ./response_formatting_service/helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN
