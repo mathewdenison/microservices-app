@@ -1,4 +1,3 @@
-
 import time
 import os
 from shared.sqs_client import receive_message, send_message
@@ -20,3 +19,8 @@ def run():
             send_message(RESPONSE_QUEUE_URL, processed)
             sqs.delete_message(QueueUrl=REQUEST_QUEUE_URL, ReceiptHandle=msg['ReceiptHandle'])
         time.sleep(2)
+
+
+if __name__ == "__main__":
+    print("Starting AI processing service...")
+    run()
