@@ -23,6 +23,7 @@ phases:
       - echo "Frontend deployed @ \$(date)"
 
       - echo Deploying Request Service...
+      - kubectl delete ingress request-service --ignore-not-found --wait=false
       - helm upgrade --install request-service ./request_service/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN --wait --timeout 180s --debug
       - echo "Request Service deployed @ \$(date)"
 
