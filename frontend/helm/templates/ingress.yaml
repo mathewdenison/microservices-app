@@ -17,6 +17,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ .Chart.Name }}
+                name: frontend
                 port:
                   number: 80
