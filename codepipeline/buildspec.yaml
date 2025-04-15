@@ -4,7 +4,7 @@ phases:
   pre_build:
     commands:
       - echo Logging into Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 883640716669.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 883640716669.dkr.ecr.us-east-2.amazonaws.com
 
       - echo Logging into Docker Hub...
       - DOCKERHUB_CREDS=$(aws secretsmanager get-secret-value --secret-id dockerhub-creds --region us-east-2 --query SecretString --output text)
@@ -15,16 +15,16 @@ phases:
   build:
     commands:
       - echo Building images...
-      - docker build -t 883640716669.dkr.ecr.us-east-1.amazonaws.com/request-service:latest -f request_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-1.amazonaws.com/ai-processing-service:latest -f ai_processing_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-1.amazonaws.com/response-formatting-service:latest -f response_formatting_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-1.amazonaws.com/frontend:latest -f frontend/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest -f request_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:latest -f ai_processing_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:latest -f response_formatting_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest -f frontend/Dockerfile .
 
       - echo Pushing images...
-      - docker push 883640716669.dkr.ecr.us-east-1.amazonaws.com/request-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-1.amazonaws.com/ai-processing-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-1.amazonaws.com/response-formatting-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-1.amazonaws.com/frontend:latest
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:latest
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:latest
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest
 
 artifacts:
   files:

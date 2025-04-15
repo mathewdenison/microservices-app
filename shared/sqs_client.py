@@ -2,7 +2,7 @@
 import boto3
 import os
 
-sqs = boto3.client('sqs', region_name=os.getenv('AWS_REGION', 'us-east-1'))
+sqs = boto3.client('sqs', region_name=os.getenv('AWS_REGION', 'us-east-2'))
 
 def send_message(queue_url, message_body):
     response = sqs.send_message(QueueUrl=queue_url, MessageBody=message_body)

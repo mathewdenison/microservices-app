@@ -31,12 +31,12 @@ resource "aws_codebuild_project" "build_project" {
 
     environment_variable {
       name  = "AWS_REGION"
-      value = "us-east-1"
+      value = "us-east-2"
     }
 
     environment_variable {
       name  = "ECR_URI"
-      value = "883640716669.dkr.ecr.us-east-1.amazonaws.com"
+      value = "883640716669.dkr.ecr.us-east-2.amazonaws.com"
     }
   }
 
