@@ -2,7 +2,7 @@ image:
   repository: 883640716669.dkr.ecr.us-east-1.amazonaws.com/ai-processing-service
   tag: latest
 
-aIProcessingService:
+aiProcessingService:
   port: 8000
   queueUrl: "https://sqs.us-east-2.amazonaws.com/883640716669/ai-queue"
 
