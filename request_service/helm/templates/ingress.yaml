@@ -8,13 +8,14 @@ metadata:
     alb.ingress.kubernetes.io/backend-protocol: HTTP
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     alb.ingress.kubernetes.io/group.name: "microservices"
+    alb.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: alb
   rules:
     - http:
         paths:
-          - path: /request
-            pathType: Prefix
+          - path: /request(/|$)(.*)
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ .Chart.Name }}
