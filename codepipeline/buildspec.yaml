@@ -12,17 +12,13 @@ phases:
       - DOCKERHUB_PASSWORD=$(echo $DOCKERHUB_CREDS | jq -r .password)
       - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
-      - echo Loading .env variables...
-      - export $(grep -v '^#' frontend/.env | xargs)
-
   build:
     commands:
       - echo Building images...
       - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest -f request_service/Dockerfile .
       - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:latest -f ai_processing_service/Dockerfile .
       - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:latest -f response_formatting_service/Dockerfile .
-
-      - docker build --build-arg REACT_APP_REQUEST_SERVICE_URL=$REACT_APP_REQUEST_SERVICE_URL --build-arg REACT_APP_FORMATTING_SERVICE_URL=$REACT_APP_FORMATTING_SERVICE_URL -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest -f frontend/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest -f frontend/Dockerfile .
 
       - echo Pushing images...
       - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest

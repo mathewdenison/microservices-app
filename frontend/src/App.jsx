@@ -6,13 +6,16 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [formattedResponse, setFormattedResponse] = useState(null);
 
+  // Dynamically get base URL from the ALB
+  const baseUrl = window.location.origin;
+
   const handleSubmit = async () => {
-    await axios.post(process.env.REACT_APP_REQUEST_SERVICE_URL, { text });
+    await axios.post(`${baseUrl}/request/submit`, { text });
     setSubmitted(true);
   };
 
   const fetchFormattedResponse = async () => {
-    const res = await axios.get(process.env.REACT_APP_FORMATTING_SERVICE_URL);
+    const res = await axios.get(`${baseUrl}/responseFormattingService/latest`);
     setFormattedResponse(res.data);
   };
 
