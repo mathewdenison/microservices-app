@@ -17,13 +17,11 @@ phases:
   build:
     commands:
       - echo Deploying Frontend...
-      - kubectl delete ingress frontend --ignore-not-found --wait=false
       - echo "Running helm install for frontend @ \$(date)"
       - helm upgrade --install frontend ./frontend/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN --wait --timeout 180s --debug
       - echo "Frontend deployed @ \$(date)"
 
       - echo Deploying Request Service...
-      - kubectl delete ingress request-service --ignore-not-found --wait=false
       - helm upgrade --install request-service ./request_service/helm --namespace default --create-namespace --set iamRoleArn=\$IAM_ROLE_ARN --wait --timeout 180s --debug
       - echo "Request Service deployed @ \$(date)"
 
