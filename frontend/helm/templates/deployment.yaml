@@ -17,3 +17,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 80
+        env:
+        - name: REQUEST_SERVICE_URL
+          value: {{ .Values.frontend.requestServiceUrl | quote }}
+        - name: FORMATTING_SERVICE_URL
+          value: {{ .Values.frontend.formattingServiceUrl | quote }}

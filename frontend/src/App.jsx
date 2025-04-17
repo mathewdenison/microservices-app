@@ -7,12 +7,12 @@ function App() {
   const [formattedResponse, setFormattedResponse] = useState(null);
 
   const handleSubmit = async () => {
-    await axios.post('http://<REQUEST-SERVICE-ENDPOINT>/submit', { text });
+    await axios.post(process.env.REACT_APP_REQUEST_SERVICE_URL, { text });
     setSubmitted(true);
   };
 
   const fetchFormattedResponse = async () => {
-    const res = await axios.get('http://<FORMATTING-SERVICE-ENDPOINT>/latest');
+    const res = await axios.get(process.env.REACT_APP_FORMATTING_SERVICE_URL);
     setFormattedResponse(res.data);
   };
 
