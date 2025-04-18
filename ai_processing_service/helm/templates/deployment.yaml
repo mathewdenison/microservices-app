@@ -13,6 +13,7 @@ spec:
         app: {{ .Chart.Name }}
     spec:
       serviceAccountName: microservice-sqs
+      automountServiceAccountToken: true
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
