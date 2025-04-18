@@ -4,7 +4,7 @@ image:
 
 aiProcessingService:
   port: 8000
-  queueUrl: "https://sqs.us-east-2.amazonaws.com/883640716669/ai-queue"
+  queueUrl: "https://sqs.us-east-2.amazonaws.com/883640716669/request-queue"
 
 responseFormattingService:
   queueUrl: "https://sqs.us-east-2.amazonaws.com/883640716669/response-queue"
