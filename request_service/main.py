@@ -1,19 +1,35 @@
-
-from fastapi import FastAPI
+import os
+import logging
+from fastapi import FastAPI, Request
 from pydantic import BaseModel
 from shared.sqs_client import send_message
-import os
-from fastapi import Request
-import logging
 
-logging.basicConfig(level=logging.INFO)
+# === Setup Logging to stdout ===
+import sys
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
+# === Initialize App ===
 app = FastAPI()
 
+# === Data Model ===
 class UserRequest(BaseModel):
     text: str
 
+# === Get Environment Variables ===
 QUEUE_URL = os.getenv("REQUEST_QUEUE_URL")
+
+if not QUEUE_URL:
+    logging.error("REQUEST_QUEUE_URL environment variable not set.")
+else:
+    logging.info(f"Using SQS queue URL: {QUEUE_URL}")
+
+# === Routes ===
 
 @app.post("/submit")
 def submit_request(user_request: UserRequest):
@@ -28,4 +44,6 @@ def submit_request(user_request: UserRequest):
 
 @app.api_route("/{full_path:path}", methods=["GET", "POST", "PUT", "DELETE"])
 async def catch_all(full_path: str, request: Request):
+    body = await request.body()
+    logging.warning(f"Unhandled path received: /{full_path} | Method: {request.method} | Body: {body.decode('utf-8')}")
     return {"path": full_path, "method": request.method}
