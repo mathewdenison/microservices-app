@@ -20,7 +20,7 @@ spec:
           ports:
             - containerPort: {{ .Values.aiProcessingService.port }}
           env:
-            - name: AI_QUEUE_URL
+            - name: REQUEST_QUEUE_URL
               value: {{ .Values.aiProcessingService.queueUrl }}
             - name: RESPONSE_QUEUE_URL
               value: {{ .Values.responseFormattingService.queueUrl }}
@@ -39,3 +39,4 @@ spec:
                 secretKeyRef:
                   name: openai-secret
                   key: api-key
+
