@@ -11,7 +11,7 @@ class UserRequest(BaseModel):
 
 QUEUE_URL = os.getenv("REQUEST_QUEUE_URL")
 
-@app.post("/submit")
+@app.post("/request/submit")
 def submit_request(user_request: UserRequest):
     send_message(QUEUE_URL, user_request.text)
     return {"status": "submitted"}

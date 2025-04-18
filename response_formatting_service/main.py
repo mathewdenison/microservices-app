@@ -23,7 +23,7 @@ def background_worker():
             print("Formatted Response:", formatted)
         time.sleep(2)
 
-@app.get("/latest")
+@app.get("/responseFormattingService/latest")
 def get_latest():
     if latest_response:
         return latest_response
