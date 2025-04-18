@@ -1,0 +1,14 @@
+frontend:
+  path: /
+  serviceName: frontend
+  servicePort: 80
+
+requestService:
+  path: /request/submit
+  serviceName: request-service
+  servicePort: 80
+
+responseFormattingService:
+  path: /responseFormattingService/latest
+  serviceName: response-formatting-service
+  servicePort: 80

@@ -7,7 +7,6 @@ crash.log
 
 # Helm
 *.tgz
-charts/
 tmpcharts/
 release.yaml
 

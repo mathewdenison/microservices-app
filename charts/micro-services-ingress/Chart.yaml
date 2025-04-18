@@ -1,0 +1,4 @@
+apiVersion: v2
+name: microservices-ingress
+description: Centralized ingress configuration for all microservices
+version: 0.1.0
