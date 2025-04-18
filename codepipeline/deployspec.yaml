@@ -32,4 +32,4 @@ phases:
       - helm upgrade --install response-formatting-service ./response_formatting_service/helm --namespace default --create-namespace --set iamRoleArn=$IAM_ROLE_ARN --set image.tag=$IMAGE_TAG --wait --timeout 180s --debug
 
       - echo Deploying Centralized Ingress...
-      - helm upgrade --install microservices-ingress ./charts/microservices-ingress --namespace default --wait --timeout 180s --debug
+      - helm upgrade --install microservices-ingress ./charts/micro-services-ingress --namespace default --wait --timeout 180s --debug
