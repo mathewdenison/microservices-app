@@ -31,7 +31,7 @@ else:
 
 # === Routes ===
 
-@app.post("/submit")
+@app.post("/request/submit")
 def submit_request(user_request: UserRequest):
     try:
         logging.info(f"Received text: {user_request.text}")
