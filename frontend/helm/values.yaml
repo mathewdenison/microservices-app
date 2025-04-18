@@ -1,6 +1,6 @@
 image:
   repository: 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend
-  tag: latest
+  tag: placeholder-to-be-overridden
 frontend:
   requestServiceUrl: "http://k8s-microservices-abc123.elb.amazonaws.com/request/submit"
   formattingServiceUrl: "http://k8s-microservices-abc123.elb.amazonaws.com/responseFormattingService/latest"

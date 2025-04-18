@@ -12,20 +12,24 @@ phases:
       - DOCKERHUB_PASSWORD=$(echo $DOCKERHUB_CREDS | jq -r .password)
       - echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
 
+      - export IMAGE_TAG=$(date +%Y%m%d%H%M%S)
+      - echo $IMAGE_TAG > image_tag.txt
+
   build:
     commands:
-      - echo Building images...
-      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest -f request_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:latest -f ai_processing_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:latest -f response_formatting_service/Dockerfile .
-      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest -f frontend/Dockerfile .
+      - echo Building Docker images with tag $IMAGE_TAG...
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:$IMAGE_TAG -f request_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:$IMAGE_TAG -f ai_processing_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:$IMAGE_TAG -f response_formatting_service/Dockerfile .
+      - docker build -t 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:$IMAGE_TAG -f frontend/Dockerfile .
 
-      - echo Pushing images...
-      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:latest
-      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:latest
+      - echo Pushing Docker images...
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/request-service:$IMAGE_TAG
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/ai-processing-service:$IMAGE_TAG
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/response-formatting-service:$IMAGE_TAG
+      - docker push 883640716669.dkr.ecr.us-east-2.amazonaws.com/frontend:$IMAGE_TAG
 
 artifacts:
   files:
-    - '**/*'
+    - image_tag.txt
+
